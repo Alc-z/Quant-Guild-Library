@@ -15,10 +15,11 @@ Welcome to the **Quant Guild Library** — a curated collection of Jupyter Noteb
 ### 📅 2026 Video Lectures (Newest First)
 
 **Latest:**
-- **102.** [How Markovian Lifting Solves the Rough Volatility Problem](https://youtu.be/Cr7kBSPqD8A)
-- **101.** [Stop Using the Sharpe Ratio Until You Watch This](https://youtu.be/NJ5PNfIQHrE)
+- **103.** [Quant Finance in 3 Minutes](https://youtu.be/2-gEfXQZFr0)
 
 **Previous:**
+- **102.** [How Markovian Lifting Solves the Rough Volatility Problem](https://youtu.be/Cr7kBSPqD8A)
+- **101.** [Stop Using the Sharpe Ratio Until You Watch This](https://youtu.be/NJ5PNfIQHrE)
 - **100.** [Black-Litterman vs. Mean-Variance Portfolio Optimization in Python](https://youtu.be/o1mCFVt79Y8)
 - **99.** [Quant Ranks Retail Trading Mistakes that Blow Up Your Account](https://youtu.be/1mpNxBaBeOw)
 - **98.** [How to Get Historical Market Data with Interactive Brokers and Python](https://youtu.be/7hezNf49iKc)
