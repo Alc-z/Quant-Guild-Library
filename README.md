@@ -15,9 +15,12 @@ Welcome to the **Quant Guild Library** — a curated collection of Jupyter Noteb
 ### 📅 2026 Video Lectures (Newest First)
 
 **Latest:**
-- **106.** [Risk is Always Mispriced: Pretty Girls, Public Speaking, Quitting Your Job](https://youtu.be/MlUSlKD8JTg)
+- **109.** [How to Not Care What People Think with Math](https://youtu.be/AjxnxG2WsHk)
+- **108.** [The Math of "Burn the Boats": Why Hedging Ruins Everything](https://youtu.be/20PEEtXrqUI)
 
 **Previous:**
+- **107.** [Life's Downside Variance: Math vs. Drugs, Edge, Judgement](https://youtu.be/Ok08aBwfeDY)
+- **106.** [Risk is Always Mispriced: Pretty Girls, Public Speaking, Quitting Your Job](https://youtu.be/MlUSlKD8JTg)
 - **105.** [How to Live According to Math](https://youtu.be/yuMKoXmjtNg)
 - **104.** [The Gaussian Cookbook for Aspiring Quants](https://youtu.be/GyrcydIWJpo)
 - **103.** [Quant Finance in 3 Minutes](https://youtu.be/2-gEfXQZFr0)
