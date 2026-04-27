@@ -15,8 +15,10 @@ Welcome to the **Quant Guild Library** — a curated collection of Jupyter Noteb
 ### 📅 2026 Video Lectures (Newest First)
 
 **Latest:**
+- **106.** [How to Trade the Covered Call](https://youtu.be/iPsPRQlDeTA)
 
 **Previous:**
+- **105.** [How to Read Options Chains](https://youtu.be/RrRbz6oXwxE)
 - **104.** [The Gaussian Cookbook for Aspiring Quants](https://youtu.be/GyrcydIWJpo)
 - **103.** [Quant Finance in 3 Minutes](https://youtu.be/2-gEfXQZFr0)
 - **102.** [How Markovian Lifting Solves the Rough Volatility Problem](https://youtu.be/Cr7kBSPqD8A)
