@@ -237,6 +237,7 @@ for i in range(252):
 
 plt.plot(np.cumsum(pl))
 ```
+![alt text](image-1.png)
 
 运行多次会产生完全不同的权益曲线。由于 Edge 很小（约 $1.43），一年后的结果可能是亏损 $3000，也可能是盈利 $750。
 
@@ -305,6 +306,7 @@ for i in range(252):
 
 plt.plot(np.cumsum(pl))
 ```
+![alt text](image.png)
 
 尝试不同的参数组合：
 - **正 Edge 且高胜率** → 权益曲线稳定向上
