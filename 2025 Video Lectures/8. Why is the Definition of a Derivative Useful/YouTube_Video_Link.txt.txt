@@ -1,1 +1,3 @@
-https://youtu.be/CD8XYP4lq4g
+https://www.youtube.com/watch?v=CD8XYP4lq4g
+
+should see the video itself
