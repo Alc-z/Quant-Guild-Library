@@ -244,9 +244,18 @@ for _ in range(n_trades - 1):
 
 胜率可能具有**趋势性**——一旦开始下降，就会持续下降（至少在一段时间内）：
 
+几何布朗运动（Geometric Brownian Motion, GBM）的离散时间解公式：
+
+
+$$S_t = S_{t-1} \cdot e^ {\left(\left(\mu - \frac{1}{2}\sigma^2\right)\Delta t + \sigma \cdot \Delta W_t\right)}$$
+
+- $\mu$: 漂移项，正负值决定长期趋势方向
+- $\sigma$: 随机项，添加上下波动的噪声
+
 ```python
 mu_drift = -0.4    # 负漂移
 sigma_drift = 0.2  # 波动率
+dt = 1 / n_trades
 
 # 使用几何布朗运动生成负漂移的胜率
 p_win_drift_stochastic = [0.6]
@@ -271,7 +280,7 @@ for _ in range(n_trades - 1):
 |---------|------------|-------------|---------|
 | **线性衰减** | $P_t = P_0 - \alpha t$ | 先升后平 | 较低（过于简化） |
 | **均值回复** | $dX_t = \theta(\mu - X_t)dt + \sigma dW_t$ | 波动向上，时有停滞 | 中等 |
-| **负漂移** | 几何布朗运动 + 负 $\mu$ | 上升后 plateau，波动 | 较高 |
+| **负漂移** | $S_t = S_{t-1} \cdot e^ {\left(\left(\mu - \frac{1}{2}\sigma^2\right)\Delta t + \sigma \cdot \Delta W_t\right)}$ | 上升后 plateau，波动 | 较高 |
 
 实际上，这些动态可能同时存在——均值回复中带有负漂移、再叠加 regime shift（制度转换）。
 
