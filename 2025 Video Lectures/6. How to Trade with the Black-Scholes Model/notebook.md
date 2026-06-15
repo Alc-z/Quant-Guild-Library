@@ -260,6 +260,10 @@ print("Premium at t=0:", black_scholes_call(100, 100, .3, .05, 1))
 print("P/L:", max(path.simulated_path[-1] - 100, 0) - black_scholes_call(100, 100, .3, .05, 1))
 ```
 
+![Terminal Value of an Option Contract](terminal_value_option.png)
+
+*Figure: Simulated price path showing terminal value and P/L for an option contract.*
+
 模拟显示：
 - 初始 Delta 为 0.53（平值期权）
 - 随着模拟路径数量增加，实值到期的比例趋向于 53%（大数定律）
@@ -437,6 +441,10 @@ plt.ylabel('Portfolio Value')
 plt.legend()
 plt.show()
 ```
+
+![Trading this Edge Over Time](trading_edge_equity.png)
+
+*Figure: Equity curve from repeatedly trading the edge under negative drift market conditions.*
 
 ### 9.2 关于权益曲线的重要提醒
 
