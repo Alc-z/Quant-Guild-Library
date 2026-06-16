@@ -197,25 +197,3 @@
 | 近期 | 均值回复波动，属正常现象 |
 | **建议** | **继续交易, 持续监控滚动胜率** |
 
-### 对比: 之前的1个月数据 vs 6年全量
-
-| 指标 | 1个月(7笔) | 6年完整(619笔) |
-|:----:|:----------:|:--------------:|
-| 胜率 | 42.9% | **69.0%** |
-| Edge | ¥-1,468/笔 | **¥+140/笔** |
-| 可靠性 | ⚠ 样本不足 | **✅ 大样本确认** |
-
-> **教训**: 仅凭1个月的交易记录(7笔)判断策略是否失效是极不可靠的。本课程的方法论需要足够样本(50笔+)才能做出可靠的 Edge 判断。
-
----
-
-## 输出文件清单
-
-| 文件 | 说明 |
-|------|------|
-| [analyze_full.py](analyze_full.py) | 完整分析脚本 (可直接运行) |
-| [full_fig1_equity_winrate.png](full_fig1_equity_winrate.png) | 权益曲线 + 滚动胜率双轴图 |
-| [full_fig2_pnl_analysis.png](full_fig2_pnl_analysis.png) | P&L 明细 + 年度/交易所分析 |
-| [full_fig3_winrate_evolution.png](full_fig3_winrate_evolution.png) | 胜率时间演变（核心） |
-| [full_fig4_ou_analysis.png](full_fig4_ou_analysis.png) | OU 均值回复过程拟合 |
-| [notebook.md](notebook.md) | 本文档 |

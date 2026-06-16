@@ -252,7 +252,7 @@ Black-Scholes 模型提供了一个 **反向转换** 的思路：
 
 $$\Delta_{call} = \frac{\partial C}{\partial S} = \Phi(d_1)$$
 
-从数学上看，Delta 等于 $\Phi(d_1)$——标准正态累积分布函数在 $d_1$ 处的值。这个值被**粗略地**解释为期权实值（in-the-money）到期的概率。
+从数学上看，Delta 等于 $\Phi(d_1)$——标准正态累积分布函数在 $d_1$ 处的值。这个值被**粗略地**解释为期权实值（in-the-money）到期的概率。股价 $S$ 变动 1 个单位时，期权价格 $C$ 近似变动 $\Delta$ 个单位。
 
 ### 5.2 课堂模拟：Delta 作为概率的局限
 
@@ -263,16 +263,24 @@ import matplotlib.pyplot as plt
 import qfin as qf
 
 # 按照几何布朗运动模拟标的价格路径
-path = qf.simulations.GeometricBrownianMotion(100, 0.05, .3, 1/252, 1)
+path = qf.simulations.GeometricBrownianMotion(
+    100,     # S0    — 标的初始价格
+    0.05,    # mu    — 年化漂移率 (μ)
+    .3,      # sigma — 年化波动率 (σ)
+    1/252,   # dt    — 单步时间间隔 (1个交易日)
+    1,       # T     — 总模拟期限 (1年, 共252步)
+)
 
 # 绘制价格路径与行权价
 plt.title("Terminal Value of an Option Contract")
-plt.hlines(100, 0, 252, label='Strike', color='orange')
+plt.hlines(100, 0, 252, label='Strike', color='orange')  # Strike — 行权价 K=100
 plt.plot(path.simulated_path, label='Price Path', color='white')
 if max(path.simulated_path[-1] - 100, 0) == 0:
-    plt.vlines(252, path.simulated_path[-1], 100, color='red', label="P/L")
+    plt.vlines(252, path.simulated_path[-1], 100,      # 到期价格 < Strike → OTM, 亏损
+               color='red', label="P/L")
 else:
-    plt.vlines(252, 100, path.simulated_path[-1], color='green', label="P/L")
+    plt.vlines(252, 100, path.simulated_path[-1],      # 到期价格 > Strike → ITM, 盈利
+               color='green', label="P/L")
 plt.style.use('dark_background')
 plt.xlabel('Time')
 plt.ylabel('Stock Price')
@@ -288,8 +296,16 @@ print("P/L:", max(path.simulated_path[-1] - 100, 0) - black_scholes_call(100, 10
 
 *Figure: Simulated price path showing terminal value and P/L for an option contract.*
 
+Premium at t=0: 14.231254785985819
+P/L: -14.231254785985819
+
+$\Delta_{call} = \Phi(d_1)$ ，代入本例参数（$S=100, K=100, r=0.05, \sigma=0.3, t=1年$）：
+$$d_1 = \frac{\ln(100/100) + (0.05 + 0.3^2/2) \times 1}{0.3 \times \sqrt{1}} = \frac{0 + 0.095}{0.3} \approx 0.3167$$
+
+查标准正态累积分布函数：$\Delta_{call} = \Phi (d1) = \Phi(0.3167) \approx 0.53$
+
 模拟显示：
-- 初始 Delta 为 0.53（平值期权）
+- 初始 Delta 为 0.53（平值期权），股价上涨 $1$ 块，看涨期权价格大约上涨 $0.53$。
 - 随着模拟路径数量增加，实值到期的比例趋向于 53%（大数定律）
 - 但这是 **在模型假设下** 的渐进收敛，在现实市场中毫无意义
 
@@ -427,7 +443,13 @@ premium = 14.10 * 100
 pls = []
 
 for i in range(100000):
-    path = qf.simulations.GeometricBrownianMotion(100, 0.05, .3, 1/252, 1)
+    path = qf.simulations.GeometricBrownianMotion(
+    100,     # S0    — 标的初始价格
+    0.05,    # mu    — 年化漂移率 (μ)
+    .3,      # sigma — 年化波动率 (σ)
+    1/252,   # dt    — 单步时间间隔 (1个交易日)
+    1,       # T     — 总模拟期限 (1年, 共252步)
+)
     pls.append(max(path.simulated_path[-1] - 100, 0)*100 - premium)
 
 np.mean(pls)

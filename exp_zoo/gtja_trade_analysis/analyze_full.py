@@ -481,6 +481,8 @@ else:
 
 # ═══════════════════════════════════════════════════════════════
 # 6. OU 过程拟合 (均值回复)
+# 使用对数似然的OU公式，拟合参数 θ (回复速度), μ (长期均值), σ (波动率)
+# 初始化参数后，通过数值优化最小化负对数似然，得到最佳拟合参数，即结果包括长期均值 μ 和半衰期（由 θ 计算）。如果 μ > 0.5，说明策略长期为正 Edge；半衰期则表示胜率偏离均值后回复的速度。
 # ═══════════════════════════════════════════════════════════════
 print("\n" + "=" * 70)
 print("📐 拟合 Ornstein-Uhlenbeck 过程...")
@@ -490,7 +492,12 @@ ou_params = None
 
 if HAS_SCIPY and len(ma5) > 20:
     def ou_log_likelihood(params, data, dt=1.0/252):
-        """OU 过程对数似然"""
+        """OU 过程对数似然
+
+        $$\mathcal{L} = \sum_{t} \left[ -\frac{1}{2}\ln(2\pi\sigma^2 dt) - \frac{(X_{t+1} - X_t - \theta(\mu-X_t)dt)^2}{2\sigma^2 dt} \right]$$
+
+        return ll: log likelihood
+        """
         theta, mu, sigma = params
         if sigma <= 0 or theta <= 0:
             return 1e10
@@ -516,8 +523,8 @@ if HAS_SCIPY and len(ma5) > 20:
 
         result = minimize(
             lambda p: ou_log_likelihood(p, data_ou),
-            [theta_init, mu_init, sigma_init],
-            bounds=[(1e-4, 10), (0.01, 0.99), (1e-4, 0.5)],
+            [theta_init, mu_init, sigma_init],  # 传入初始参数
+            bounds=[(1e-4, 10), (0.01, 0.99), (1e-4, 0.5)], # 参数边界，约束条件
             method='L-BFGS-B'
         )
 
