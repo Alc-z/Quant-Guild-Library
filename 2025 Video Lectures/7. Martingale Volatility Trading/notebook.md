@@ -53,42 +53,36 @@ Roman 在视频中明确指出：
 设初始赌注为 $b$，经过 $n$ 次连续亏损后，每次加倍，总投注额为：
 
 $$
-T_n = b + 2b + 4b + \ldots + 2^n b = b \cdot (2^{n+1} - 1)
+T_n = b + 2b + 4b + \ldots + 2^{n-1}b = b \cdot (2^n - 1)
 $$
 
-这是一个 $n+1$ 项的等比数列求和。
+这是一个 $n$ 项的等比数列求和。
 
 **直觉理解**：
-- 第 1 次亏损后总投注：$T_0 = b$
-- 第 2 次亏损后总投注：$T_1 = b + 2b = 3b$
-- 第 3 次亏损后总投注：$T_2 = b + 2b + 4b = 7b$
+- 第 1 次亏损后总投注：$T_1 = b$
+- 第 2 次亏损后总投注：$T_2 = b + 2b = 3b$
+- 第 3 次亏损后总投注：$T_3 = b + 2b + 4b = 7b$
 
 也就是说，每次追加投注后，亏损总额都是**初始赌注的指数倍**。
 
 ### 2.2 盈利恢复公式
 
-如果你在第 $n+1$ 次最终获胜，你的总利润为：
+如果你在第 $n+1$ 次最终获胜(1:1赔率，盈利金额是$2^nb$)，你的总利润为：
 
 $$
 P = b - T_n + 2^n b
 $$
 
-代入 $T_n = b \cdot (2^{n+1} - 1)$：
+代入 $T_n = b \cdot (2^n - 1)$：
 
 $$
-P = b - b \cdot (2^{n+1} - 1) + 2^n b
+P = b - b \cdot (2^n - 1) + 2^n b
 $$
 $$
-P = b - 2^{n+1}b + b + 2^n b
+P = b - 2^n b + b + 2^n b
 $$
 $$
-P = 2b - 2^{n+1}b + 2^n b
-$$
-$$
-P = 2b - 2 \cdot 2^n b + 2^n b
-$$
-$$
-P = 2b - 2^n b
+P = 2b
 $$
 
 > 等等——这个结果和直觉不同。让我们重新审视一下。
@@ -124,7 +118,7 @@ $$
 \mathbb{E}[P] = \sum_{n=0}^\infty P(\text{Win on } n+1) \cdot (\text{Profit from } n+1)
 $$
 
-在第 $n+1$ 轮获胜的概率为 $p^n (1-p)$，盈利为初始赌注 $b$：
+在第 $n+1$ 轮获胜的概率为 $p^n (1-p)$，$p$ 是单次输的概率，$1-p$ 是单次赢的概率，盈利为初始赌注 $b$：
 
 $$
 \mathbb{E}[P] = \sum_{n=0}^\infty p^n (1-p) \cdot b
@@ -177,24 +171,24 @@ $$
 总投注额随连败次数 $n$ 呈指数增长：
 
 $$
-T_n = b \cdot (2^{n+1} - 1) \propto 2^n
+T_n = b \cdot (2^n - 1) \propto 2^n
 $$
 
 具体来看：
 
 | 连败次数 | 总投注额（以 $b$ 为单位） | 示例：$b = \$10$ |
 |---------|------------------------|----------------|
-| 5 次 | $2^{6} - 1 = 63$ | \$630 |
-| 10 次 | $2^{11} - 1 = 2,047$ | \$20,470 |
-| 15 次 | $2^{16} - 1 = 65,535$ | \$655,350 |
-| 20 次 | $2^{21} - 1 = 2,097,151$ | \$20,971,510 |
+| 5 次 | $2^{5} - 1 = 31$ | \$310 |
+| 10 次 | $2^{10} - 1 = 1,023$ | \$10,230 |
+| 15 次 | $2^{15} - 1 = 32,767$ | \$327,670 |
+| 20 次 | $2^{20} - 1 = 1,048,575$ | \$10,485,750 |
 
 ### 4.2 问题的本质
 
 连败 $n$ 次的概率虽然随 $n$ 增大而指数级减小，但一旦发生，其造成的损失是**指数级增长**的。这两股力量的对决正是鞅策略的核心风险：
 
 - **概率递减**：连败 $n$ 次的概率为 $p^n$（指数衰减）
-- **损失递增**：连败 $n$ 次的损失为 $b \cdot (2^{n+1} - 1)$（指数增长）
+- **损失递增**：连败 $n$ 次的损失为 $b \cdot (2^n - 1)$（指数增长）
 
 > 当你用 $1,000 美元的账户、初始下注 $10 时，大概只需要 10 次连败就会完全爆仓。这比你想象的要快得多。
 
@@ -250,9 +244,9 @@ def roulette_martingale(initial_bet, max_rounds, bankroll):
     return bankroll
 
 # 参数
-initial_bet = 10
-max_rounds = 10
-bankroll = 1000
+initial_bet = 10    # 初始赌注（$），每次输后翻倍
+max_rounds = 10     # 最大尝试轮数，超过则强制停止（防无限循环）
+bankroll = 1000     # 初始本金（$），本金归零则爆仓
 
 roulette_martingale(initial_bet, max_rounds, bankroll)
 ```
@@ -310,10 +304,10 @@ def roulette_martingale_simulation_with_bets(initial_bet, bankroll, max_rounds, 
     return cumulative_wealth, bets_over_time
 
 # 参数
-initial_bet = 10
-bankroll = 1000
-max_rounds = 10
-num_games = 1000
+initial_bet = 10    # 初始赌注（$）
+bankroll = 1000     # 每次游戏的初始本金（$）
+max_rounds = 10     # 每局最大轮数，防止无限循环
+num_games = 1000    # 模拟游戏的总局数
 
 cumulative_wealth, bets_over_time = roulette_martingale_simulation_with_bets(
     initial_bet, bankroll, max_rounds, num_games
@@ -330,6 +324,10 @@ plt.legend()
 plt.grid()
 plt.show()
 ```
+
+![累积权益曲线](images/cumulative_equity_curve.png)
+
+![赌注规模](images/bet_size_over_time.png)
 
 ### 5.3 权益曲线与赌注规模的分析
 
@@ -440,6 +438,8 @@ plt.legend()
 plt.show()
 ```
 
+![Ornstein-Uhlenbeck 过程模拟](images/ou_process.png)
+
 ### 7.3 OU 过程的特性说明
 
 - **红色虚线**代表均值 $\mu = 30$，过程始终围绕此线波动
@@ -476,6 +476,8 @@ plt.legend()
 plt.grid()
 plt.show()
 ```
+
+![VIX 历史数据与均值线](images/vix_historical.png)
 
 ### 8.2 VIX 的关键观察
 
@@ -577,6 +579,8 @@ plt.show()
 print("Final Capital:", capital)
 print("Max Exposure:", max_exposure)
 ```
+
+![波动率鞅策略权益曲线](images/martingale_vix_equity.png)
 
 ### 10.2 模拟结果的关键分析
 
